@@ -4,8 +4,7 @@
   "description": "The babel plugin to transform inline environment variables to value getters",
   "main": "src/index.js",
   "scripts": {
-    "test": "NODE_DEBUG=babel-plugin-transform-environment-variables-to-getters nyc ava --timeout=10s --verbose",
-    "test:dev": "NODE_DEBUG=babel-plugin-transform-environment-variables-to-getters nyc ava --timeout=10s --verbose && npm run report:dev",
+    "test": "jest --coverage test/*.test.js",
     "lint": "eslint .",
     "fix": "eslint . --fix",
     "posttest": "npm run report",
@@ -39,12 +38,14 @@
     "url": "https://github.com/kaelzhang/babel-plugin-transform-environment-variables-to-getters/issues"
   },
   "devDependencies": {
+    "@babel/helper-plugin-test-runner": "^7.1.0",
+    "@ostai/eslint-config": "^3.0.0",
     "ava": "^1.4.1",
     "codecov": "^3.3.0",
-    "nyc": "^13.3.0",
-    "@ostai/eslint-config": "^3.0.0",
+    "eslint": "^5.16.0",
     "eslint-plugin-import": "^2.16.0",
-    "eslint": "^5.16.0"
+    "jest": "^24.8.0",
+    "nyc": "^13.3.0"
   },
   "dependencies": {
     "@babel/core": "^7.4.4"

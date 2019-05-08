@@ -35,7 +35,7 @@ console.log(process.env.NODE_ENV)
 
 #### Via `.babelrc` without options
 
-```js
+```json
 {
   "plugins": ["transform-environment-variables-to-getters"]
 }
@@ -43,8 +43,7 @@ console.log(process.env.NODE_ENV)
 Out
 
 ```js
-// Cooperate with webpack.DefinePlugin,
-// then we can change __PROCESS_ENVS_GETTER__
+// We can change __PROCESS_ENVS_GETTER__ with `webpack.DefinePlugin`
 const __getProcessEnvs = require(__PROCESS_ENVS_GETTER__)
 
 console.log(__getProcessEnvs().NODE_ENV)
@@ -52,7 +51,7 @@ console.log(__getProcessEnvs().NODE_ENV)
 
 #### Via `.babelrc` with options
 
-```js
+```json
 {
   "plugins": ["transform-environment-variables-to-getters", {
     "require": "/path/to/get-env.js"
