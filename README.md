@@ -56,7 +56,7 @@ console.log(__getProcessEnvs().NODE_DEBUG)
 ```json
 {
   "plugins": ["transform-environment-variables-to-getters", {
-    "require": "/path/to/get-env.js",
+    "require": "'/path/to/get-env.js'",
     "exclude": ["NODE_DEBUG"]
   }]
 }
@@ -72,9 +72,11 @@ console.log(process.env.NODE_DEBUG)
 
 ## options `Object`
 
-- **require?** `string`
-- **include?** `Array<string>` keys to include.
-- **exclude** `Array<string>` keys to exclude
+- **require?** `string='__PROCESS_ENVS_GETTER__'` it will be treated as
+  - `StringLiteral` if is a string with quotes
+  - `Identifier` if not
+- **include?** `Array<string>` keys to include. If not specified, all keys which are not excluded will be included
+- **exclude?** `Array<string>` keys to exclude.
 
 ## License
 
