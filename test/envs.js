@@ -1,3 +1,3 @@
 module.exports = () => ({
-  FOO: 'TEVTG_FOO'
+  TEVTG_FOO: 'bar'
 })

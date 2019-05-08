@@ -17,7 +17,27 @@ const declare = (api, {
         if (path.get('object').matchesPattern('process.env')) {
           const key = path.toComputedKey()
           if (t.isStringLiteral(key)) {
-            path.replaceWith(t.valueToNode(process.env[key.value]))
+            // Ref: @babel/types/src/definitions/core.js
+            // ```
+            // defineType("MemberExpression", {
+            //   builder: []
+            // }
+            // ```
+            const node = t.memberExpression(
+              // object
+              t.callExpression(
+                // callee
+                t.identifier('__getProcessEnvs'),
+                // arguments
+                []
+              ),
+              // property
+              t.identifier(key.value)
+              // computed
+              // optional
+            )
+
+            path.replaceWith(node)
           }
         }
       }
