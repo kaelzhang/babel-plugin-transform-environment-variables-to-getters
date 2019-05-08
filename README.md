@@ -29,6 +29,7 @@ $ npm i babel-plugin-transform-environment-variables-to-getters
 
 ```js
 console.log(process.env.NODE_ENV)
+console.log(process.env.NODE_DEBUG)
 ```
 
 ### Out
@@ -47,6 +48,7 @@ Out
 const __getProcessEnvs = require(__PROCESS_ENVS_GETTER__)
 
 console.log(__getProcessEnvs().NODE_ENV)
+console.log(__getProcessEnvs().NODE_DEBUG)
 ```
 
 #### Via `.babelrc` with options
@@ -54,7 +56,8 @@ console.log(__getProcessEnvs().NODE_ENV)
 ```json
 {
   "plugins": ["transform-environment-variables-to-getters", {
-    "require": "/path/to/get-env.js"
+    "require": "/path/to/get-env.js",
+    "exclude": ["NODE_DEBUG"]
   }]
 }
 ```
@@ -64,7 +67,14 @@ Out
 const __getProcessEnvs = require('/path/to/get-env.js')
 
 console.log(__getProcessEnvs().NODE_ENV)
+console.log(process.env.NODE_DEBUG)
 ```
+
+## options `Object`
+
+- **require?** `string`
+- **include?** `Array<string>` keys to include.
+- **exclude** `Array<string>` keys to exclude
 
 ## License
 

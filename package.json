@@ -4,13 +4,11 @@
   "description": "The babel plugin to transform inline environment variables to value getters",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest --coverage test/*.test.js",
+    "test": "FOO=foo2 BAR=bar2 jest --coverage test/*.test.js",
     "lint": "eslint .",
     "fix": "eslint . --fix",
     "posttest": "npm run report",
-    "report": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "report:dev": "nyc report --reporter=html && npm run report:open",
-    "report:open": "open coverage/index.html"
+    "report": "codecov"
   },
   "files": [
     "src/"
@@ -40,14 +38,13 @@
   "devDependencies": {
     "@babel/helper-plugin-test-runner": "^7.1.0",
     "@ostai/eslint-config": "^3.0.0",
-    "ava": "^1.4.1",
     "codecov": "^3.3.0",
     "eslint": "^5.16.0",
     "eslint-plugin-import": "^2.16.0",
     "jest": "^24.8.0",
-    "nyc": "^13.3.0"
+    "@babel/core": "^7.4.4"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@babel/core": "^7.4.4"
   }
 }

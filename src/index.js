@@ -20,7 +20,9 @@ const argument = arg => {
 }
 
 const declare = (api, {
-  require: requireArgument
+  require: requireArgument,
+  include,
+  exclude
 } = {}) => {
   api.assertVersion(7)
 
@@ -81,7 +83,11 @@ const declare = (api, {
       MemberExpression (path) {
         if (path.get('object').matchesPattern('process.env')) {
           const key = path.toComputedKey()
-          if (t.isStringLiteral(key)) {
+          if (
+            t.isStringLiteral(key)
+            && (!include || include.indexOf(key.value) !== - 1)
+            && (!exclude || exclude.indexOf(key.value) === - 1)
+          ) {
             has = true
 
             // Ref: @babel/types/src/definitions/core.js
