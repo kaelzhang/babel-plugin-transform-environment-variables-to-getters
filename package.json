@@ -21,7 +21,8 @@
     "url": "git://github.com/kaelzhang/babel-plugin-transform-environment-variables-to-getters.git"
   },
   "keywords": [
-    "babel-plugin-transform-environment-variables-to-getters"
+    "environment-variables",
+    "babel-plugin"
   ],
   "engines": {
     "node": ">= 6"
@@ -44,5 +45,8 @@
     "@ostai/eslint-config": "^3.0.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint": "^5.16.0"
+  },
+  "dependencies": {
+    "@babel/core": "^7.4.4"
   }
 }

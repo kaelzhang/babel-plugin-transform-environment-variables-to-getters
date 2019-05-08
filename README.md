@@ -23,10 +23,48 @@ The babel plugin to transform inline environment variables to value getters
 $ npm i babel-plugin-transform-environment-variables-to-getters
 ```
 
-## Usage
+## Example
+
+### In
 
 ```js
-const babel_plugin_transform_environment_variables_to_getters = require('babel-plugin-transform-environment-variables-to-getters')
+console.log(process.env.NODE_ENV)
+```
+
+### Out
+
+#### Via `.babelrc` without options
+
+```js
+{
+  "plugins": ["transform-environment-variables-to-getters"]
+}
+```
+Out
+
+```js
+// Cooperate with webpack.DefinePlugin,
+// then we can change __PROCESS_ENVS_GETTER__
+const __getProcessEnvs = require(__PROCESS_ENVS_GETTER__)
+
+console.log(__getProcessEnvs().NODE_ENV)
+```
+
+#### Via `.babelrc` with options
+
+```js
+{
+  "plugins": ["transform-environment-variables-to-getters", {
+    "require": "/path/to/get-env.js"
+  }]
+}
+```
+Out
+
+```js
+const __getProcessEnvs = require('/path/to/get-env.js')
+
+console.log(__getProcessEnvs().NODE_ENV)
 ```
 
 ## License
