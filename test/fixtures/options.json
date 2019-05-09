@@ -1,7 +1,7 @@
 {
   "plugins": [
     ["transform-environment-variables-to-getters", {
-      "require": "'../../envs'"
+      "envFilepath": "../../envs"
     }]
   ]
 }

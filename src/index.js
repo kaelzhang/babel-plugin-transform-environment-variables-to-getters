@@ -1,30 +1,38 @@
 const {
   types: t
 } = require('@babel/core')
+const {isString, isArray, isUndefined} = require('core-util-is')
 
-const DEFAULT_REQUIRE = '__PROCESS_ENVS_GETTER__'
+const {error} = require('./error')
 
-const REGEX_MATCH_QUOTED = /^(["'])(.*)\1$/
+const DEFAULT_GETTER_IDENDIFIER = '__getProcessEnvs'
 
-const argument = arg => {
-  if (!arg) {
-    return t.identifier(DEFAULT_REQUIRE)
-  }
-
-  const match = arg.match(REGEX_MATCH_QUOTED)
-  if (!match) {
-    return t.identifier(arg)
-  }
-
-  return t.stringLiteral(match[2])
-}
+const isArrayStringOrUndefined = arr => isUndefined(arr)
+  || isArray(arr) && arr.every(isString)
 
 const declare = (api, {
-  require: requireArgument,
+  envFilepath,
+  getterIdentifier = DEFAULT_GETTER_IDENDIFIER,
   include,
   exclude
 } = {}) => {
   api.assertVersion(7)
+
+  if (!isString(envFilepath)) {
+    throw error('INVALID_ENV_FILE_PATH', envFilepath)
+  }
+
+  if (!isString(getterIdentifier)) {
+    throw error('INVALID_GETTER_IDENTIFIER', getterIdentifier)
+  }
+
+  if (!isArrayStringOrUndefined(include)) {
+    throw error('INVALID_INCLUDE', include)
+  }
+
+  if (!isArrayStringOrUndefined(exclude)) {
+    throw error('INVALID_EXCLUDE', exclude)
+  }
 
   let program
   let has
@@ -63,13 +71,13 @@ const declare = (api, {
         [
           t.variableDeclarator(
             // id
-            t.identifier('__getProcessEnvs'),
+            t.identifier(getterIdentifier),
             // init
             t.callExpression(
               // callee
               t.identifier('require'),
               [
-                argument(requireArgument)
+                t.stringLiteral(envFilepath)
               ]
             )
           )
@@ -100,7 +108,7 @@ const declare = (api, {
               // object
               t.callExpression(
                 // callee
-                t.identifier('__getProcessEnvs'),
+                t.identifier(getterIdentifier),
                 // arguments
                 []
               ),
@@ -118,6 +126,6 @@ const declare = (api, {
   }
 }
 
-declare.DEFAULT_REQUIRE = DEFAULT_REQUIRE
+declare.DEFAULT_GETTER_IDENDIFIER = DEFAULT_GETTER_IDENDIFIER
 
 module.exports = declare
