@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-transform-environment-variables-to-getters",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "The babel plugin to transform inline environment variables to value getters",
   "main": "src/index.js",
   "scripts": {

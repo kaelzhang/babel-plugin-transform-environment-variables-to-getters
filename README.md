@@ -34,18 +34,22 @@ console.log(process.env.NODE_DEBUG)
 
 ### Out
 
-#### Via `.babelrc` without options
+#### Via `.babelrc` with no options.exclude/include
 
 ```json
 {
-  "plugins": ["transform-environment-variables-to-getters"]
+  "plugins": [
+    ["transform-environment-variables-to-getters", {
+      "envFilepath": "/path/to/get-env.js"
+    }]
+  ]
 }
 ```
 Out
 
 ```js
 // We can change __PROCESS_ENVS_GETTER__ with `webpack.DefinePlugin`
-const __getProcessEnvs = require(__PROCESS_ENVS_GETTER__)
+const __getProcessEnvs = require('/path/to/get-env.js')
 
 console.log(__getProcessEnvs().NODE_ENV)
 console.log(__getProcessEnvs().NODE_DEBUG)
@@ -55,10 +59,12 @@ console.log(__getProcessEnvs().NODE_DEBUG)
 
 ```json
 {
-  "plugins": ["transform-environment-variables-to-getters", {
-    "envFilepath": "/path/to/get-env.js",
-    "exclude": ["NODE_DEBUG"]
-  }]
+  "plugins": [
+    ["transform-environment-variables-to-getters", {
+      "envFilepath": "/path/to/get-env.js",
+      "exclude": ["NODE_DEBUG"]
+    }]
+  ]
 }
 ```
 Out
@@ -67,6 +73,8 @@ Out
 const __getProcessEnvs = require('/path/to/get-env.js')
 
 console.log(__getProcessEnvs().NODE_ENV)
+
+// process.env.NODE_DEBUG is excluded
 console.log(process.env.NODE_DEBUG)
 ```
 
